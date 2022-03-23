@@ -1,0 +1,59 @@
+{
+  "name": "@mordv/utils",
+  "description": "My js/ts utils",
+  "version": "0.0.1",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "utils"
+  ],
+  "license": "MIT",
+  "author": "Alexander Mordvinov",
+  "homepage": "https://github.com/mordv/utils",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mordv/utils"
+  },
+  "bugs": {
+    "url": "https://github.com/mordv/utils/issues"
+  },
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "npm run build && dist/cli.js",
+    "prepublish": "npm run build",
+    "pretest": "npm run build",
+    "test": "ava",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.31.0",
+    "@typescript-eslint/parser": "^4.31.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.25.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.4.1",
+    "typescript": "^4.6.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix --max-warnings=0"
+    ]
+  }
+}
