@@ -1,7 +1,7 @@
 {
   "name": "@mordv/utils",
   "description": "My js/ts utils",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "keywords": [
     "javascript",
     "typescript",
@@ -17,15 +17,18 @@
   "bugs": {
     "url": "https://github.com/mordv/utils/issues"
   },
+  "main": "dist/cjs/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
     "node": ">=10"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "npm run build:cjs && npm run build:esm",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
     "dev": "npm run build && dist/cli.js",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "pretest": "npm run build",
     "test": "ava",
     "prepare": "husky install",
