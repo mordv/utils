@@ -1,7 +1,8 @@
 {
   "name": "@mordv/utils",
   "description": "My js/ts utils",
-  "version": "0.0.4",
+  "version": "0.0.7",
+  "type": "module",
   "keywords": [
     "javascript",
     "typescript",
@@ -25,7 +26,7 @@
   },
   "scripts": {
     "build": "npm run build:cjs && npm run build:esm",
-    "build:esm": "tsc",
+    "build:esm": "tsc --module esnext",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",
     "dev": "npm run build && dist/cli.js",
     "prepublishOnly": "npm run build",
