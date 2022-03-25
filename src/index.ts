@@ -1,11 +1,10 @@
-export const invokeAll = (...args: (() => void | never)[]): void =>
-  args.forEach((a) => a());
+export const invokeAll = (...args: (() => void | never)[]): void => args.forEach((a) => a());
 
-export const keysTyped = <T>(obj: T): (keyof T)[] =>
-  Object.keys(obj) as (keyof T)[];
-
-  export const entriesTyped = <T>(obj: T): [keyof T, T[keyof T]][] =>
-  Object.entries(obj) as [keyof T, T[keyof T]][];
+export const ObjectTyped = {
+  keys: <T>(obj: T): (keyof T)[] => Object.keys(obj) as (keyof T)[],
+  values: <T>(obj: T): T[keyof T][] => Object.values(obj) as T[keyof T][],
+  entries: <T>(obj: T): [keyof T, T[keyof T]][] => Object.entries(obj) as [keyof T, T[keyof T]][],
+};
 
 export const sum = (numbers: Iterable<number>): number => {
   let res = 0;
@@ -20,8 +19,7 @@ export const avg = (numbers: number[]): number => {
   return numbers.length ? s / numbers.length : 0;
 };
 
-export const intRange = (length: number): number[] =>
-  Array.from({ length }).map((_, idx) => idx);
+export const intRange = (length: number): number[] => Array.from({ length }).map((_, idx) => idx);
 
 export const randomFilter =
   <T extends unknown>(probability: number): ((val: T) => boolean) =>
@@ -34,8 +32,7 @@ const getRandomInt = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export const randomElement = <T>(array: T[]): T =>
-  array[getRandomInt(0, array.length - 1)];
+export const randomElement = <T>(array: T[]): T => array[getRandomInt(0, array.length - 1)];
 
 export const addInRing = (n: number, add: number, ringSize: number): number =>
   n + add >= ringSize ? 0 : n + add < 0 ? ringSize - 1 : n + add;
@@ -52,8 +49,7 @@ export type ChangeReturnType<F extends (...p: never) => unknown, NewReturnType> 
   ...p: Parameters<F>
 ) => NewReturnType;
 
-
-        export type PickFunctions<T> = {
+export type PickFunctions<T> = {
   [K in keyof T as T[K] extends (...args: never[]) => unknown ? K : never]: T[K];
 };
 
