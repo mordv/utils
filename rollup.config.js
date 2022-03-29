@@ -5,11 +5,11 @@ export default [
   {
     input: 'src/index.ts',
     output: [
-      { file: 'dist/index.js', format: 'es' },
+      { dir: 'dist', format: 'es' },
       { file: 'dist/index.cjs', format: 'cjs' },
     ],
     plugins: [
-      typescript({ compilerOptions: { module: 'esnext' } }),
+      typescript({ compilerOptions: { module: 'esnext', declaration: true} }),
       nodeResolve({ resolveOnly: [], modulesOnly: true }),
     ],
   },
