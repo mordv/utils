@@ -42,11 +42,15 @@ export const isValued = <T extends unknown>(val?: T | null | undefined): val is 
 
 export const noop = (): void => {};
 
+export type RequireFields<T extends unknown, K extends keyof T> = T & {
+  [R in K]-?: NonNullable<T[R]>;
+};
+
 export type RequireAllFields<T extends unknown> = {
   [R in keyof T]-?: NonNullable<T[R]>;
 };
 
-export type RequireFields<T extends unknown, K extends keyof T> = T & {
+export type PickRequire<T extends unknown, K extends keyof T> = {
   [R in K]-?: NonNullable<T[R]>;
 };
 
