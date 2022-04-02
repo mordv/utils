@@ -34,6 +34,9 @@ export const randomInt = (min: number, max: number): number => {
 
 export const randomElement = <T>(array: T[]): T => array[randomInt(0, array.length - 1)];
 
+export const mapRange = (x: number, [a1, a2]: [number, number], [b1, b2]: [number, number]): number =>
+    b1 + ((x - a1) * (b2 - b1)) / ((a2 - a1) ?? 1);
+
 export const modulo = (n: number, m: number) => ((n % m) + m) % m;
 
 export const addInRing = (n: number, add: number, ringSize: number): number => modulo(n + add, ringSize);
@@ -41,6 +44,7 @@ export const addInRing = (n: number, add: number, ringSize: number): number => m
 export const isValued = <T extends unknown>(val?: T | null | undefined): val is T => val !== undefined && val !== null;
 
 export const noop = (): void => {};
+
 
 export type RequireFields<T extends unknown, K extends keyof T> = T & {
   [R in K]-?: NonNullable<T[R]>;
