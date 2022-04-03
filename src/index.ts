@@ -35,7 +35,7 @@ export const randomInt = (min: number, max: number): number => {
 export const randomElement = <T>(array: T[]): T => array[randomInt(0, array.length - 1)];
 
 export const mapRange = (x: number, [a1, a2]: [number, number], [b1, b2]: [number, number]): number =>
-    b1 + ((x - a1) * (b2 - b1)) / ((a2 - a1) ?? 1);
+  b1 + ((x - a1) * (b2 - b1)) / (a2 - a1 ?? 1);
 
 export const modulo = (n: number, m: number) => ((n % m) + m) % m;
 
@@ -45,13 +45,16 @@ export const isValued = <T extends unknown>(val?: T | null | undefined): val is 
 
 export const noop = (): void => {};
 
-
 export type RequireFields<T extends unknown, K extends keyof T> = T & {
   [R in K]-?: NonNullable<T[R]>;
 };
 
 export type RequireAllFields<T extends unknown> = {
   [R in keyof T]-?: NonNullable<T[R]>;
+};
+
+export type ChangeReturnTypes<T extends object, NewReturnType> = {
+  [K in keyof T]: NewReturnType;
 };
 
 export type PickRequire<T extends unknown, K extends keyof T> = {
