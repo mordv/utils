@@ -45,6 +45,19 @@ export const isValued = <T extends unknown>(val?: T | null | undefined): val is 
 
 export const noop = (): void => {};
 
+export type OptionalType<T> = {
+  map: <Result>(mapper: (value: T) => Result) => OptionalType<Result>;
+  get: () => T | null | undefined;
+};
+
+export const optional = <T>(value?: T | undefined | null): OptionalType<T> => {
+  const map = <Result>(mapper: (value: T) => Result): OptionalType<Result> => {
+    return optional(isValued(value) ? mapper(value) : value);
+  };
+
+  return { map, get: () => value };
+};
+
 export type RequireFields<T extends unknown, K extends keyof T> = T & {
   [R in K]-?: NonNullable<T[R]>;
 };
