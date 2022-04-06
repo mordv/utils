@@ -45,14 +45,16 @@ export const isValued = <T extends unknown>(val?: T | null | undefined): val is 
 
 export const noop = (): void => {};
 
-export type OptionalType<T> = {
-  map: <Result>(mapper: (value: T) => Result) => OptionalType<Result>;
-  get: () => T | null | undefined;
+export type ExtractNullable<T> = (T extends undefined ? undefined : never) | (T extends null ? null : never);
+
+export type OptionalType<T, Initial = never> = {
+  map: <Result>(mapper: (value: NonNullable<T>) => Result) => OptionalType<Result, Initial>;
+  get: () => T | ExtractNullable<Initial>;
 };
 
-export const optional = <T>(value?: T | undefined | null): OptionalType<T> => {
-  const map = <Result>(mapper: (value: T) => Result): OptionalType<Result> => {
-    return optional(isValued(value) ? mapper(value) : value);
+export const optional = <T, Initial = T>(value: T): OptionalType<T, Initial> => {
+  const map = <Result>(mapper: (value: NonNullable<T>) => Result): OptionalType<Result, Initial> => {
+    return optional(isValued(value) ? mapper(value!) : value);
   };
 
   return { map, get: () => value };
