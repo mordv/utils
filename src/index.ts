@@ -80,8 +80,10 @@ export type ChangeReturnType<F extends (...p: never) => unknown, NewReturnType> 
   ...p: Parameters<F>
 ) => NewReturnType;
 
-export type PickFunctions<T> = {
-  [K in keyof T as T[K] extends (...args: never[]) => unknown ? K : never]: T[K];
-};
-
 export type OmitKeys<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
+export type FunctionType = (...args: never[]) => unknown
+
+export type PickFunctions<T> = {
+  [K in keyof T as T[K] extends FunctionType ? K : never]: T[K];
+};
