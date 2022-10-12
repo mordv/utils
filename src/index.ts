@@ -32,6 +32,15 @@ export const randomInt = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+export const randomInRange = (rangeOrSymmetricalValue: [number, number] | number): number =>
+  mapRange(
+    Math.random(),
+    [0, 1],
+    Array.isArray(rangeOrSymmetricalValue)
+      ? rangeOrSymmetricalValue
+      : [-Math.abs(rangeOrSymmetricalValue), Math.abs(rangeOrSymmetricalValue)]
+  );
+
 export const randomElement = <T>(array: T[]): T => array[randomInt(0, array.length - 1)];
 
 export const mapRange = (x: number, [a1, a2]: [number, number], [b1, b2]: [number, number]): number =>
@@ -82,7 +91,7 @@ export type ChangeReturnType<F extends (...p: never) => unknown, NewReturnType> 
 
 export type OmitKeys<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-export type FunctionType = (...args: never[]) => unknown
+export type FunctionType = (...args: never[]) => unknown;
 
 export type PickFunctions<T> = {
   [K in keyof T as T[K] extends FunctionType ? K : never]: T[K];
