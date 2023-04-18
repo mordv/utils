@@ -1,5 +1,7 @@
 export const invokeAll = (...args: (() => void | never)[]): void => args.forEach((a) => a());
 
+export const capitalize = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
+
 export const ObjectTyped = {
   keys: <T>(obj: T): (keyof T)[] => Object.keys(obj) as (keyof T)[],
   values: <T>(obj: T): T[keyof T][] => Object.values(obj) as T[keyof T][],
