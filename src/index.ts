@@ -98,3 +98,7 @@ export type FunctionType = (...args: never[]) => unknown;
 export type PickFunctions<T> = {
   [K in keyof T as T[K] extends FunctionType ? K : never]: T[K];
 };
+
+type Functionalize<T, A = void> = { [K in keyof T]: A extends void ? () => T[K] : (a: A) => T[K] };
+
+type Defunctionalize<T> = { [K in keyof T]: T[K] extends FunctionType ? ReturnType<T[K]> : T[K] };
