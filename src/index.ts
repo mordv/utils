@@ -21,6 +21,19 @@ export const avg = (numbers: number[]): number => {
   return numbers.length ? s / numbers.length : 0;
 };
 
+export function* iterate(count: number) {
+  if (count <= 0) {
+    return;
+  }
+
+  for (let i = 0; i < count; i++) {
+    const first = i === 0;
+    const last = i === count - 1;
+
+    yield { i, count, first, last };
+  }
+}
+
 export const intRange = (length: number): number[] => Array.from({ length }).map((_, idx) => idx);
 
 export const randomFilter =
