@@ -6,6 +6,10 @@ export const ObjectTyped = {
   keys: <T>(obj: T): (keyof T)[] => Object.keys(obj) as (keyof T)[],
   values: <T>(obj: T): T[keyof T][] => Object.values(obj) as T[keyof T][],
   entries: <T>(obj: T): [keyof T, T[keyof T]][] => Object.entries(obj) as [keyof T, T[keyof T]][],
+  fromEntries: <const T extends ReadonlyArray<readonly [PropertyKey, unknown]>>(
+      entries: T
+  ): { [K in T[number] as K[0]]: K[1] } =>
+      Object.fromEntries(entries) as { [K in T[number] as K[0]]: K[1] }
 };
 
 export const sum = (numbers: Iterable<number>): number => {
