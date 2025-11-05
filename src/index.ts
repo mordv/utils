@@ -3,13 +3,15 @@ export const invokeAll = (...args: (() => void | never)[]): void => args.forEach
 export const capitalize = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
 
 export const ObjectTyped = {
-  keys: <T>(obj: T): (keyof T)[] => Object.keys(obj) as (keyof T)[],
-  values: <T>(obj: T): T[keyof T][] => Object.values(obj) as T[keyof T][],
-  entries: <T>(obj: T): [keyof T, T[keyof T]][] => Object.entries(obj) as [keyof T, T[keyof T]][],
+  keys: <T extends object>(obj: T): (keyof T)[] => Object.keys(obj) as (keyof T)[],
+  values: <T extends object>(obj: T): T[keyof T][] => Object.values(obj) as T[keyof T][],
+  entries: <T extends object>(obj: T): [keyof T, T[keyof T]][] => Object.entries(obj) as [keyof T, T[keyof T]][],
   fromEntries: <const T extends ReadonlyArray<readonly [PropertyKey, unknown]>>(
       entries: T
   ): { [K in T[number] as K[0]]: K[1] } =>
-      Object.fromEntries(entries) as { [K in T[number] as K[0]]: K[1] }
+      Object.fromEntries(entries) as { [K in T[number] as K[0]]: K[1] },
+  assign: <T extends object, Params>(t: T, factory: (t: T) => Params): T & Params =>
+      Object.assign(t, factory(t))
 };
 
 export const sum = (numbers: Iterable<number>): number => {
@@ -63,7 +65,7 @@ export const randomInRange = (rangeOrSymmetricalValue: [number, number] | number
 export const randomElement = <T>(array: T[]): T => array[randomInt(0, array.length - 1)];
 
 export const mapRange = (x: number, [a1, a2]: [number, number], [b1, b2]: [number, number]): number =>
-  b1 + ((x - a1) * (b2 - b1)) / (a2 - a1 ?? 1);
+  b1 + ((x - a1) * (b2 - b1)) / (a2 - a1 || 1);
 
 export const modulo = (n: number, m: number) => ((n % m) + m) % m;
 
