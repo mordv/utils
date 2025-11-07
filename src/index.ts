@@ -11,7 +11,8 @@ export const ObjectTyped = {
   ): { [K in T[number] as K[0]]: K[1] } =>
       Object.fromEntries(entries) as { [K in T[number] as K[0]]: K[1] },
   assign: <T extends object, Params>(t: T, factory: (t: T) => Params): T & Params =>
-      Object.assign(t, factory(t))
+      Object.assign(t, factory(t)),
+  create: <T extends object>(factory: () => T): T => factory(),
 };
 
 export const sum = (numbers: Iterable<number>): number => {
