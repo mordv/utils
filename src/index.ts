@@ -1,7 +1,9 @@
 export const invokeAll = (...args: (() => void | never)[]): void => args.forEach((a) => a());
 
 export const capitalize = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
-
+type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
 export const ObjectTyped = {
   keys: <T extends object>(obj: T): (keyof T)[] => Object.keys(obj) as (keyof T)[],
   values: <T extends object>(obj: T): T[keyof T][] => Object.values(obj) as T[keyof T][],
@@ -14,6 +16,14 @@ export const ObjectTyped = {
       Object.assign(t, factory(t)),
   create: <T extends object>(factory: () => T): T => factory(),
   map: <T extends object, R>(o: T, map: (o: T) => R): R => map(o),
+  pick: <T extends object, K extends keyof T>(o: T, keys: K[]): Prettify<Pick<T, K>> =>
+      Object.fromEntries(keys.map(k => [k, o[k]])) as Prettify<Pick<T, K>>,
+  omit: <T extends object, K extends keyof T>(o: T, keys: K[]): Prettify<Omit<T, K>> => {
+    const keysSet = new Set<string>(keys as string[]);
+    return Object.fromEntries(
+        Object.entries(o).filter(([k]) => !keysSet.has(k))
+    ) as Prettify<Omit<T, K>>;
+  }
 };
 
 export const sum = (numbers: Iterable<number>): number => {
