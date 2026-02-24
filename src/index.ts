@@ -13,6 +13,7 @@ export const ObjectTyped = {
   assign: <T extends object, Params>(t: T, factory: (t: T) => Params): T & Params =>
       Object.assign(t, factory(t)),
   create: <T extends object>(factory: () => T): T => factory(),
+  map: <T extends object, R>(o: T, map: (o: T) => R): R => map(o),
 };
 
 export const sum = (numbers: Iterable<number>): number => {
